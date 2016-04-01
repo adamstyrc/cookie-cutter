@@ -81,34 +81,33 @@ public class ZingerTouchListener implements View.OnTouchListener {
         float imageHeight = view.getDrawable().getIntrinsicHeight() * matrixParams.getScaleHeight();
 
 
-        if (imageHeight * scale < circle.getDiameter() || imageWidth * scale < circle.getDiameter()) {
-            return;
+        if (imageHeight * scale < circle.getDiameter()) {
+            scale = circle.getDiameter() / imageHeight;
+        } else if (imageWidth * scale < circle.getDiameter()){
+            scale = circle.getDiameter() / imageWidth;
+        } else {
+
+            float savedDistanceLeft = mid.x - matrixParams.getX();
+            float savedDistanceRight = matrixParams.getX() + imageWidth - mid.x;
+            float savedDistanceTop = mid.y - matrixParams.getY();
+            float savedDistanceBottom = matrixParams.getY() + imageHeight - mid.y;
+
+            float imageLeft = mid.x - savedDistanceLeft * scale;
+            float imageRight = mid.x + savedDistanceRight * scale;
+            float imageTop = mid.y - savedDistanceTop * scale;
+            float imageBottom = mid.y + savedDistanceBottom * scale;
+
+
+            if (imageLeft > circle.getLeftBound()) {
+                scale = (mid.x - circle.getLeftBound()) / savedDistanceLeft;
+            } else if (imageRight < circle.getRightBound()) {
+                scale = (circle.getRightBound() - mid.x) / savedDistanceRight;
+            } else if (imageTop > circle.getTopBound()) {
+                scale = (mid.y - circle.getTopBound()) / savedDistanceTop;
+            } else if (imageBottom < circle.getBottomBound()) {
+                scale = (circle.getBottomBound() - mid.y) / savedDistanceBottom;
+            }
         }
-
-
-        float savedDistanceLeft = mid.x - matrixParams.getX();
-        float savedDistanceRight = matrixParams.getX() + imageWidth - mid.x;
-        float savedDistanceTop = mid.y - matrixParams.getY();
-        float savedDistanceBottom = matrixParams.getY() + imageHeight - mid.y;
-
-        float imageLeft = mid.x - savedDistanceLeft * scale;
-        float imageRight = mid.x + savedDistanceRight * scale;
-        float imageTop = mid.y - savedDistanceTop * scale;
-        float imageBottom = mid.y + savedDistanceBottom * scale;
-
-
-
-        if (imageLeft > circle.getLeftBound()) {
-            scale = (mid.x - circle.getLeftBound()) / savedDistanceLeft;
-        } else if (imageRight < circle.getRightBound()) {
-            scale = (circle.getRightBound() - mid.x) / savedDistanceRight;
-        } else if (imageTop > circle.getTopBound()) {
-            scale = (mid.y - circle.getTopBound()) / savedDistanceTop;
-        } else if (imageBottom < circle.getBottomBound()) {
-            scale = (circle.getBottomBound() - mid.y) / savedDistanceBottom;
-        }
-
-
 
         matrix.set(savedMatrix);
         matrix.postScale(scale, scale, mid.x, mid.y);
