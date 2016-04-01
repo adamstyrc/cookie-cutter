@@ -9,6 +9,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.AttributeSet;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
 /**
@@ -18,6 +19,7 @@ public class ZingerImageView extends ImageView {
 
     private Paint circlePaint;
     private int circleRadius;
+    private Circle circle;
 
     public ZingerImageView(Context context) {
         super(context);
@@ -44,7 +46,6 @@ public class ZingerImageView extends ImageView {
     }
 
     public void init() {
-        setOnTouchListener(new ZingerTouchListener());
         setScaleType(ScaleType.MATRIX);
 
         circlePaint = new Paint();
@@ -54,7 +55,18 @@ public class ZingerImageView extends ImageView {
         circlePaint.setStyle(Paint.Style.STROKE);
 
         circleRadius = 400;
+
+        ViewTreeObserver vto = getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                circle = new Circle(getWidth() / 2, getHeight() / 2, circleRadius);
+                setOnTouchListener(new ZingerTouchListener(circle));
+            }
+        });
     }
+
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -76,7 +88,6 @@ public class ZingerImageView extends ImageView {
 
         MatrixParams matrixParams = MatrixParams.fromMatrix(matrix);
         Bitmap bitmap = ((BitmapDrawable) getDrawable()).getBitmap();
-        Circle circle = new Circle(getWidth() / 2, getHeight() / 2, circleRadius);
 
         int size = (int) (circle.getDiameter() / matrixParams.getScaleWidth());
         int translationX = (int) matrixParams.getX() ;

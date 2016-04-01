@@ -11,19 +11,20 @@ import android.widget.ImageView;
  */
 public class ZingerTouchListener implements View.OnTouchListener {
 
+    private Mode mode = Mode.NONE;
+
+    private Circle circle;
+
     Matrix matrix = new Matrix();
     Matrix savedMatrix = new Matrix();
 
-    static final int NONE = 0;
-    static final int DRAG = 1;
-    static final int ZOOM = 2;
-    int mode = NONE;
+    PointF firstTouchPoint = new PointF();
+    PointF scaleCenterPoint = new PointF();
+    float fingersDistance = 1f;
 
-
-    PointF startPoint = new PointF();
-    PointF mid = new PointF();
-    float oldDist = 1f;
-
+    public ZingerTouchListener(Circle cropCircle) {
+        this.circle = cropCircle;
+    }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -34,28 +35,27 @@ public class ZingerTouchListener implements View.OnTouchListener {
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
                 savedMatrix.set(matrix);
-                startPoint.set(event.getX(), event.getY());
-                mode = DRAG;
+                firstTouchPoint.set(event.getX(), event.getY());
+                mode = Mode.DRAG;
                 break;
             case MotionEvent.ACTION_POINTER_DOWN:
-                oldDist = spacing(event);
-                if (oldDist > 10f) {
+                fingersDistance = spacing(event);
+                if (fingersDistance > 10f) {
                     savedMatrix.set(matrix);
-                    midPoint(mid, event);
-                    mode = ZOOM;
+                    midPoint(scaleCenterPoint, event);
+                    mode = Mode.ZOOM;
                 }
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_POINTER_UP:
-                mode = NONE;
+                mode = Mode.NONE;
                 break;
             case MotionEvent.ACTION_MOVE:
-                if (mode == DRAG) {
+                if (mode == Mode.DRAG) {
                     onImageDragged(event, view);
-                } else if (mode == ZOOM) {
+                } else if (mode == Mode.ZOOM) {
                     float newDist = spacing(event);
                     if (newDist > 10f) {
-
                         onImageScaled(view, newDist);
                     }
                 }
@@ -68,13 +68,8 @@ public class ZingerTouchListener implements View.OnTouchListener {
     }
 
     private void onImageScaled(ImageView view, float newDist) {
-        float scale = newDist / oldDist;
+        float scale = newDist / fingersDistance;
         Logger.log("Scale: " + scale);
-
-
-        Circle circle = new Circle(view.getWidth() / 2,
-                view.getHeight() / 2,
-                400);
 
         MatrixParams matrixParams = MatrixParams.fromMatrix(savedMatrix);
         float imageWidth = view.getDrawable().getIntrinsicWidth() * matrixParams.getScaleWidth();
@@ -87,36 +82,36 @@ public class ZingerTouchListener implements View.OnTouchListener {
             scale = circle.getDiameter() / imageWidth;
         } else {
 
-            float savedDistanceLeft = mid.x - matrixParams.getX();
-            float savedDistanceRight = matrixParams.getX() + imageWidth - mid.x;
-            float savedDistanceTop = mid.y - matrixParams.getY();
-            float savedDistanceBottom = matrixParams.getY() + imageHeight - mid.y;
+            float savedDistanceLeft = scaleCenterPoint.x - matrixParams.getX();
+            float savedDistanceRight = matrixParams.getX() + imageWidth - scaleCenterPoint.x;
+            float savedDistanceTop = scaleCenterPoint.y - matrixParams.getY();
+            float savedDistanceBottom = matrixParams.getY() + imageHeight - scaleCenterPoint.y;
 
-            float imageLeft = mid.x - savedDistanceLeft * scale;
-            float imageRight = mid.x + savedDistanceRight * scale;
-            float imageTop = mid.y - savedDistanceTop * scale;
-            float imageBottom = mid.y + savedDistanceBottom * scale;
+            float imageLeft = scaleCenterPoint.x - savedDistanceLeft * scale;
+            float imageRight = scaleCenterPoint.x + savedDistanceRight * scale;
+            float imageTop = scaleCenterPoint.y - savedDistanceTop * scale;
+            float imageBottom = scaleCenterPoint.y + savedDistanceBottom * scale;
 
 
             if (imageLeft > circle.getLeftBound()) {
-                scale = (mid.x - circle.getLeftBound()) / savedDistanceLeft;
+                scale = (scaleCenterPoint.x - circle.getLeftBound()) / savedDistanceLeft;
             } else if (imageRight < circle.getRightBound()) {
-                scale = (circle.getRightBound() - mid.x) / savedDistanceRight;
+                scale = (circle.getRightBound() - scaleCenterPoint.x) / savedDistanceRight;
             } else if (imageTop > circle.getTopBound()) {
-                scale = (mid.y - circle.getTopBound()) / savedDistanceTop;
+                scale = (scaleCenterPoint.y - circle.getTopBound()) / savedDistanceTop;
             } else if (imageBottom < circle.getBottomBound()) {
-                scale = (circle.getBottomBound() - mid.y) / savedDistanceBottom;
+                scale = (circle.getBottomBound() - scaleCenterPoint.y) / savedDistanceBottom;
             }
         }
 
         matrix.set(savedMatrix);
-        matrix.postScale(scale, scale, mid.x, mid.y);
+        matrix.postScale(scale, scale, scaleCenterPoint.x, scaleCenterPoint.y);
     }
 
     private void onImageDragged(MotionEvent event, ImageView view) {
         matrix.set(savedMatrix);
-        float translationX = event.getX() - startPoint.x;
-        float translationY = event.getY() - startPoint.y;
+        float translationX = event.getX() - firstTouchPoint.x;
+        float translationY = event.getY() - firstTouchPoint.y;
 
         float[] matrixValues = new float[9];
         savedMatrix.getValues(matrixValues);
@@ -183,10 +178,16 @@ public class ZingerTouchListener implements View.OnTouchListener {
         return (float) Math.sqrt((double) x * x + y * y);
     }
 
-    /** Calculate the mid point of the first two fingers */
+    /** Calculate the scaleCenterPoint point of the first two fingers */
     private void midPoint(PointF point, MotionEvent event) {
         float x = event.getX(0) + event.getX(1);
         float y = event.getY(0) + event.getY(1);
         point.set(x / 2, y / 2);
+    }
+
+    private enum Mode {
+        NONE,
+        DRAG,
+        ZOOM;
     }
 }
