@@ -2,7 +2,6 @@ package com.adamstyrc.zingerlib;
 
 import android.graphics.Matrix;
 import android.graphics.PointF;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,9 +12,7 @@ import android.widget.ImageView;
 public class ZingerTouchListener implements View.OnTouchListener {
 
     Matrix matrix = new Matrix();
-    Matrix lastScaledMatrix = new Matrix();
     Matrix savedMatrix = new Matrix();
-    float lastSavedScale;
 
     static final int NONE = 0;
     static final int DRAG = 1;
@@ -58,33 +55,8 @@ public class ZingerTouchListener implements View.OnTouchListener {
                 } else if (mode == ZOOM) {
                     float newDist = spacing(event);
                     if (newDist > 10f) {
-                        matrix.set(savedMatrix);
-                        float scale = newDist / oldDist;
-                        Logger.log("Scale: " + scale);
-                        matrix.postScale(scale, scale, mid.x, mid.y);
 
-                        float[] matrixValues = new float[9];
-                        matrix.getValues(matrixValues);
-
-                        float x = matrixValues[2];
-                        float y = matrixValues[5];
-
-                        int circleCenterX = view.getWidth() / 2;
-                        int circleCenterY = view.getHeight() / 2;
-                        int circleRadius = 400;
-
-                        float width = view.getDrawable().getIntrinsicWidth() * scale;
-                        float height = view.getDrawable().getIntrinsicHeight() * scale;
-
-                        if (x > circleCenterX - circleRadius ||
-                                x + width < circleCenterX + circleRadius ||
-                                y > circleCenterY - circleRadius ||
-                                y + height < circleCenterY + circleRadius) {
-                            Logger.log("lastScaledMatrix: " + lastScaledMatrix.toString());
-                            matrix.set(lastScaledMatrix);
-                        } else {
-                            lastScaledMatrix.set(matrix);
-                        }
+                        onImageScaled(view, newDist);
                     }
                 }
                 break;
@@ -93,6 +65,53 @@ public class ZingerTouchListener implements View.OnTouchListener {
         Logger.log(matrix.toString());
         view.setImageMatrix(matrix);
         return true; // indicate event was handled
+    }
+
+    private void onImageScaled(ImageView view, float newDist) {
+        float scale = newDist / oldDist;
+        Logger.log("Scale: " + scale);
+
+
+        Circle circle = new Circle(view.getWidth() / 2,
+                view.getHeight() / 2,
+                400);
+
+        MatrixParams matrixParams = MatrixParams.fromMatrix(savedMatrix);
+        float imageWidth = view.getDrawable().getIntrinsicWidth() * matrixParams.getScaleWidth();
+        float imageHeight = view.getDrawable().getIntrinsicHeight() * matrixParams.getScaleHeight();
+
+
+        if (imageHeight * scale < circle.getDiameter() || imageWidth * scale < circle.getDiameter()) {
+            return;
+        }
+
+
+        float savedDistanceLeft = mid.x - matrixParams.getX();
+        float savedDistanceRight = matrixParams.getX() + imageWidth - mid.x;
+        float savedDistanceTop = mid.y - matrixParams.getY();
+        float savedDistanceBottom = matrixParams.getY() + imageHeight - mid.y;
+
+        float imageLeft = mid.x - savedDistanceLeft * scale;
+        float imageRight = mid.x + savedDistanceRight * scale;
+        float imageTop = mid.y - savedDistanceTop * scale;
+        float imageBottom = mid.y + savedDistanceBottom * scale;
+
+
+
+        if (imageLeft > circle.getLeftBound()) {
+            scale = (mid.x - circle.getLeftBound()) / savedDistanceLeft;
+        } else if (imageRight < circle.getRightBound()) {
+            scale = (circle.getRightBound() - mid.x) / savedDistanceRight;
+        } else if (imageTop > circle.getTopBound()) {
+            scale = (mid.y - circle.getTopBound()) / savedDistanceTop;
+        } else if (imageBottom < circle.getBottomBound()) {
+            scale = (circle.getBottomBound() - mid.y) / savedDistanceBottom;
+        }
+
+
+
+        matrix.set(savedMatrix);
+        matrix.postScale(scale, scale, mid.x, mid.y);
     }
 
     private void onImageDragged(MotionEvent event, ImageView view) {
