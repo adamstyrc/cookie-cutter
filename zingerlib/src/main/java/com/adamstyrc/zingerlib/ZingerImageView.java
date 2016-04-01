@@ -51,7 +51,7 @@ public class ZingerImageView extends ImageView {
         circlePaint = new Paint();
         circlePaint.setAntiAlias(true);
         circlePaint.setColor(Color.WHITE);
-        circlePaint.setStrokeWidth(10);
+        circlePaint.setStrokeWidth(5);
         circlePaint.setStyle(Paint.Style.STROKE);
 
         circleRadius = 400;
