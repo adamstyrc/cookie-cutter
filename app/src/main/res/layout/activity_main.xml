@@ -6,14 +6,6 @@
     tools:context="com.adamstyrc.zinger.MainActivity"
     android:background="@android:color/black">
 
-    <ImageView
-        android:id="@+id/ivCropped"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleType="centerInside"
-        android:src="@drawable/img3"
-        />
-
     <com.adamstyrc.zingerlib.ZingerImageView
         android:id="@+id/ivZinger"
         android:layout_width="match_parent"
