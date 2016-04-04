@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
@@ -80,6 +81,15 @@ public class BiscuitImageView extends ImageView {
         canvas.drawCircle(cx, cy, circleRadius, circlePaint);
     }
 
+    @Override
+    public void setImageURI(Uri uri) {
+        super.setImageURI(uri);
+
+        BitmapDrawable bitmapDrawable = (BitmapDrawable) getDrawable();
+        Bitmap bitmap = bitmapDrawable.getBitmap();
+        setImageBitmap(bitmap);
+    }
+
     public void setCircleRadius(int circleRadius) {
         this.circleRadius = circleRadius;
         if (biscuitParams.getCircle() != null) {
@@ -99,15 +109,9 @@ public class BiscuitImageView extends ImageView {
         Circle circle = biscuitParams.getCircle();
 
         int size = (int) (circle.getDiameter() / matrixParams.getScaleWidth());
-        int translationX = (int) matrixParams.getX() ;
-        int translationY = (int) matrixParams.getY();
-
-        int y = circle.getTopBound() - translationY;
-        y = Math.max(y, 0);
-        y /= matrixParams.getScaleWidth();
-        int x = circle.getLeftBound() - translationX;
-        x = Math.max(x, 0);
-        x /= matrixParams.getScaleWidth();
+        size -= 1;
+        int y = getCropTop(matrixParams, circle);
+        int x = getCropLeft(matrixParams, circle);
 
         Logger.log("x: " + x + " y: " + y + " size: " + size);
         Bitmap croppedBitmap = Bitmap.createBitmap(bitmap,
@@ -117,5 +121,21 @@ public class BiscuitImageView extends ImageView {
                 size);
 
         return croppedBitmap;
+    }
+
+    private int getCropLeft(MatrixParams matrixParams, Circle circle) {
+        int translationX = (int) matrixParams.getX();
+        int x = circle.getLeftBound() - translationX;
+        x = Math.max(x, 0);
+        x /= matrixParams.getScaleWidth();
+        return x;
+    }
+
+    private int getCropTop(MatrixParams matrixParams, Circle circle) {
+        int translationY = (int) matrixParams.getY();
+        int y = circle.getTopBound() - translationY;
+        y = Math.max(y, 0);
+        y /= matrixParams.getScaleWidth();
+        return y;
     }
 }
