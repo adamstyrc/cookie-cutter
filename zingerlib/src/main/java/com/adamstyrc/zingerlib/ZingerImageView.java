@@ -81,6 +81,9 @@ public class ZingerImageView extends ImageView {
 
     public void setCircleRadius(int circleRadius) {
         this.circleRadius = circleRadius;
+        if (circle != null) {
+            circle.setRadius(circleRadius);
+        }
     }
 
     public Bitmap getCroppedBitmap() {

@@ -46,4 +46,8 @@ public class Circle {
     public int getBottomBound() {
         return cy + radius;
     }
+
+    public void setRadius(int radius) {
+        this.radius = radius;
+    }
 }
