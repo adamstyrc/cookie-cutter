@@ -2,7 +2,6 @@ package com.adamstyrc.biscuit;
 
 import android.graphics.Matrix;
 import android.graphics.PointF;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,9 +11,10 @@ import android.widget.ImageView;
  */
 public class BiscuitTouchListener implements View.OnTouchListener {
 
+    private final Circle circle;
     private Mode mode = Mode.NONE;
 
-    private Circle circle;
+    private BiscuitParams biscuitParams;
 
     Matrix matrix = new Matrix();
     Matrix savedMatrix = new Matrix();
@@ -23,8 +23,9 @@ public class BiscuitTouchListener implements View.OnTouchListener {
     PointF scaleCenterPoint = new PointF();
     float fingersDistance = 1f;
 
-    public BiscuitTouchListener(Circle cropCircle) {
-        this.circle = cropCircle;
+    public BiscuitTouchListener(BiscuitParams biscuitParams) {
+        this.biscuitParams = biscuitParams;
+        circle = biscuitParams.getCircle();
     }
 
     @Override
@@ -103,6 +104,10 @@ public class BiscuitTouchListener implements View.OnTouchListener {
         if (imageBottom < circle.getBottomBound()) {
             scale = (circle.getBottomBound() - scaleCenterPoint.y) / savedDistanceBottom;
             Logger.log("Scaling exceeded: bottom " + scale);
+        }
+
+        if (scale * matrixParams.getScaleWidth() > biscuitParams.getMaxZoom()) {
+            scale = biscuitParams.getMaxZoom() / matrixParams.getScaleWidth();
         }
 
         matrix.set(savedMatrix);

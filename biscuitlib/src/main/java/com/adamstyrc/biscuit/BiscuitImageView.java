@@ -19,7 +19,7 @@ public class BiscuitImageView extends ImageView {
 
     private Paint circlePaint;
     private int circleRadius;
-    private Circle circle;
+    private BiscuitParams biscuitParams;
 
     public BiscuitImageView(Context context) {
         super(context);
@@ -54,6 +54,7 @@ public class BiscuitImageView extends ImageView {
         circlePaint.setStrokeWidth(5);
         circlePaint.setStyle(Paint.Style.STROKE);
 
+        biscuitParams = new BiscuitParams();
         circleRadius = 400;
 
         ViewTreeObserver vto = getViewTreeObserver();
@@ -61,8 +62,8 @@ public class BiscuitImageView extends ImageView {
             @Override
             public void onGlobalLayout() {
                 getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                circle = new Circle(getWidth() / 2, getHeight() / 2, circleRadius);
-                setOnTouchListener(new BiscuitTouchListener(circle));
+                biscuitParams.setCircle(new Circle(getWidth() / 2, getHeight() / 2, circleRadius));
+                setOnTouchListener(new BiscuitTouchListener(biscuitParams));
             }
         });
     }
@@ -81,9 +82,13 @@ public class BiscuitImageView extends ImageView {
 
     public void setCircleRadius(int circleRadius) {
         this.circleRadius = circleRadius;
-        if (circle != null) {
-            circle.setRadius(circleRadius);
+        if (biscuitParams.getCircle() != null) {
+            biscuitParams.getCircle().setRadius(circleRadius);
         }
+    }
+
+    public void setMaxZoom(float zoom) {
+        biscuitParams.setMaxZoom(zoom);
     }
 
     public Bitmap getCroppedBitmap() {
@@ -91,6 +96,7 @@ public class BiscuitImageView extends ImageView {
 
         MatrixParams matrixParams = MatrixParams.fromMatrix(matrix);
         Bitmap bitmap = ((BitmapDrawable) getDrawable()).getBitmap();
+        Circle circle = biscuitParams.getCircle();
 
         int size = (int) (circle.getDiameter() / matrixParams.getScaleWidth());
         int translationX = (int) matrixParams.getX() ;
