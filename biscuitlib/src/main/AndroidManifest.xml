@@ -1,7 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.adamstyrc.zingerlib">
-
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    package="com.adamstyrc.biscuit">
 
     <application
         android:allowBackup="true"
