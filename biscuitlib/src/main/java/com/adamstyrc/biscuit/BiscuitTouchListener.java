@@ -2,6 +2,7 @@ package com.adamstyrc.biscuit;
 
 import android.graphics.Matrix;
 import android.graphics.PointF;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -75,33 +76,33 @@ public class BiscuitTouchListener implements View.OnTouchListener {
         float imageWidth = view.getDrawable().getIntrinsicWidth() * matrixParams.getScaleWidth();
         float imageHeight = view.getDrawable().getIntrinsicHeight() * matrixParams.getScaleHeight();
 
+        float savedDistanceLeft = scaleCenterPoint.x - matrixParams.getX();
+        float savedDistanceRight = matrixParams.getX() + imageWidth - scaleCenterPoint.x;
+        float savedDistanceTop = scaleCenterPoint.y - matrixParams.getY();
+        float savedDistanceBottom = matrixParams.getY() + imageHeight - scaleCenterPoint.y;
 
-        if (imageHeight * scale < circle.getDiameter()) {
-            scale = circle.getDiameter() / imageHeight;
-        } else if (imageWidth * scale < circle.getDiameter()){
-            scale = circle.getDiameter() / imageWidth;
-        } else {
+        float imageLeft = scaleCenterPoint.x - savedDistanceLeft * scale;
+        if (imageLeft > circle.getLeftBound()) {
+            scale = (scaleCenterPoint.x - circle.getLeftBound()) / savedDistanceLeft;
+            Logger.log("Scaling exceeded: left " + scale);
+        }
 
-            float savedDistanceLeft = scaleCenterPoint.x - matrixParams.getX();
-            float savedDistanceRight = matrixParams.getX() + imageWidth - scaleCenterPoint.x;
-            float savedDistanceTop = scaleCenterPoint.y - matrixParams.getY();
-            float savedDistanceBottom = matrixParams.getY() + imageHeight - scaleCenterPoint.y;
+        float imageRight = scaleCenterPoint.x + savedDistanceRight * scale;
+        if (imageRight < circle.getRightBound()) {
+            scale = (circle.getRightBound() - scaleCenterPoint.x) / savedDistanceRight;
+            Logger.log("Scaling exceeded: right " + scale);
+        }
 
-            float imageLeft = scaleCenterPoint.x - savedDistanceLeft * scale;
-            float imageRight = scaleCenterPoint.x + savedDistanceRight * scale;
-            float imageTop = scaleCenterPoint.y - savedDistanceTop * scale;
-            float imageBottom = scaleCenterPoint.y + savedDistanceBottom * scale;
+        float imageTop = scaleCenterPoint.y - savedDistanceTop * scale;
+        if (imageTop > circle.getTopBound()) {
+            scale = (scaleCenterPoint.y - circle.getTopBound()) / savedDistanceTop;
+            Logger.log("Scaling exceeded: top " + scale);
+        }
 
-
-            if (imageLeft > circle.getLeftBound()) {
-                scale = (scaleCenterPoint.x - circle.getLeftBound()) / savedDistanceLeft;
-            } else if (imageRight < circle.getRightBound()) {
-                scale = (circle.getRightBound() - scaleCenterPoint.x) / savedDistanceRight;
-            } else if (imageTop > circle.getTopBound()) {
-                scale = (scaleCenterPoint.y - circle.getTopBound()) / savedDistanceTop;
-            } else if (imageBottom < circle.getBottomBound()) {
-                scale = (circle.getBottomBound() - scaleCenterPoint.y) / savedDistanceBottom;
-            }
+        float imageBottom = scaleCenterPoint.y + savedDistanceBottom * scale;
+        if (imageBottom < circle.getBottomBound()) {
+            scale = (circle.getBottomBound() - scaleCenterPoint.y) / savedDistanceBottom;
+            Logger.log("Scaling exceeded: bottom " + scale);
         }
 
         matrix.set(savedMatrix);
