@@ -23,9 +23,12 @@ public class BiscuitTouchListener implements View.OnTouchListener {
     PointF scaleCenterPoint = new PointF();
     float fingersDistance = 1f;
 
-    public BiscuitTouchListener(BiscuitParams biscuitParams) {
+    public BiscuitTouchListener(BiscuitParams biscuitParams, Matrix matrix) {
         this.biscuitParams = biscuitParams;
         circle = biscuitParams.getCircle();
+
+        this.matrix.set(matrix);
+        this.savedMatrix.set(matrix);
     }
 
     @Override

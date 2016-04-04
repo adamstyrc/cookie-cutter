@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.util.AttributeSet;
@@ -64,11 +65,24 @@ public class BiscuitImageView extends ImageView {
             public void onGlobalLayout() {
                 getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 biscuitParams.setCircle(new Circle(getWidth() / 2, getHeight() / 2, circleRadius));
-                setOnTouchListener(new BiscuitTouchListener(biscuitParams));
+
+                setOnTouchListener(new BiscuitTouchListener(biscuitParams, getImageMatrix()));
             }
         });
     }
 
+    private void setImageCentered() {
+        Matrix matrix = getImageMatrix();
+        Bitmap bitmap = getBitmap();
+
+        if (bitmap != null) {
+            RectF drawableRect = new RectF(0, 0, bitmap.getWidth(), bitmap.getHeight());
+//            RectF viewRect = new RectF(0, 0, 2 * circleRadius, 2 * circleRadius);
+            RectF viewRect = new RectF(0, 0, getWidth(), getHeight());
+            matrix.setRectToRect(drawableRect, viewRect, Matrix.ScaleToFit.CENTER);
+            setImageMatrix(matrix);
+        }
+    }
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -90,6 +104,15 @@ public class BiscuitImageView extends ImageView {
         setImageBitmap(bitmap);
     }
 
+    @Override
+    public void setImageBitmap(Bitmap bm) {
+        super.setImageBitmap(bm);
+
+        setImageCentered();
+
+        setOnTouchListener(new BiscuitTouchListener(biscuitParams, getImageMatrix()));
+    }
+
     public void setCircleRadius(int circleRadius) {
         this.circleRadius = circleRadius;
         if (biscuitParams.getCircle() != null) {
@@ -105,7 +128,7 @@ public class BiscuitImageView extends ImageView {
         Matrix matrix = getImageMatrix();
 
         MatrixParams matrixParams = MatrixParams.fromMatrix(matrix);
-        Bitmap bitmap = ((BitmapDrawable) getDrawable()).getBitmap();
+        Bitmap bitmap = getBitmap();
         Circle circle = biscuitParams.getCircle();
 
         int size = (int) (circle.getDiameter() / matrixParams.getScaleWidth());
@@ -121,6 +144,10 @@ public class BiscuitImageView extends ImageView {
                 size);
 
         return croppedBitmap;
+    }
+
+    private Bitmap getBitmap() {
+        return ((BitmapDrawable) getDrawable()).getBitmap();
     }
 
     private int getCropLeft(MatrixParams matrixParams, Circle circle) {
