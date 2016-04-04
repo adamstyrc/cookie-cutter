@@ -1,11 +1,11 @@
-package com.adamstyrc.biscuit;
+package com.adamstyrc.example;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.adamstyrc.biscuitlib.BiscuitImageView;
+import com.adamstyrc.biscuit.BiscuitImageView;
 
 public class MainActivity extends AppCompatActivity {
 

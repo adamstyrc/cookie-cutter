@@ -1,4 +1,4 @@
-package com.adamstyrc.biscuitlib;
+package com.adamstyrc.biscuit;
 
 /**
  * Created by adamstyrc on 01/04/16.

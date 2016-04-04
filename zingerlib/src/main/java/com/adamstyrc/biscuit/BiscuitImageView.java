@@ -1,4 +1,4 @@
-package com.adamstyrc.zingerlib;
+package com.adamstyrc.biscuit;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -15,31 +15,31 @@ import android.widget.ImageView;
 /**
  * Created by adamstyrc on 31/03/16.
  */
-public class ZingerImageView extends ImageView {
+public class BiscuitImageView extends ImageView {
 
     private Paint circlePaint;
     private int circleRadius;
     private Circle circle;
 
-    public ZingerImageView(Context context) {
+    public BiscuitImageView(Context context) {
         super(context);
         init();
     }
 
-    public ZingerImageView(Context context, AttributeSet attrs) {
+    public BiscuitImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         init();
     }
 
-    public ZingerImageView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public BiscuitImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         init();
     }
 
     @TargetApi(value = 21)
-    public ZingerImageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public BiscuitImageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
 
         init();
@@ -62,7 +62,7 @@ public class ZingerImageView extends ImageView {
             public void onGlobalLayout() {
                 getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 circle = new Circle(getWidth() / 2, getHeight() / 2, circleRadius);
-                setOnTouchListener(new ZingerTouchListener(circle));
+                setOnTouchListener(new BiscuitTouchListener(circle));
             }
         });
     }

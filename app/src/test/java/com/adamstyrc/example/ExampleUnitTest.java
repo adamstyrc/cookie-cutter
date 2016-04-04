@@ -1,4 +1,4 @@
-package com.adamstyrc.biscuitlib;
+package com.adamstyrc.example;
 
 import org.junit.Test;
 

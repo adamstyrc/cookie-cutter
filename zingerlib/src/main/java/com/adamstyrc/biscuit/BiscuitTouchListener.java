@@ -1,4 +1,4 @@
-package com.adamstyrc.biscuitlib;
+package com.adamstyrc.biscuit;
 
 import android.graphics.Matrix;
 import android.graphics.PointF;

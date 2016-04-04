@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.adamstyrc.biscuit.MainActivity"
+    tools:context="com.adamstyrc.example.MainActivity"
     android:background="@android:color/black">
 
-    <com.adamstyrc.biscuitlib.BiscuitImageView
+    <com.adamstyrc.biscuit.BiscuitImageView
         android:id="@+id/ivBiscuit"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
