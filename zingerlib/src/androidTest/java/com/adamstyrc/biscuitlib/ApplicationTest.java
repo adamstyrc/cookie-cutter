@@ -1,4 +1,4 @@
-package com.adamstyrc.zinger;
+package com.adamstyrc.biscuitlib;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

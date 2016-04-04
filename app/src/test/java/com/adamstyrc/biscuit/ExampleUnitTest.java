@@ -1,4 +1,4 @@
-package com.adamstyrc.zingerlib;
+package com.adamstyrc.biscuit;
 
 import org.junit.Test;
 

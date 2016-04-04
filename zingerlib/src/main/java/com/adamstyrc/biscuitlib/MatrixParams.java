@@ -1,4 +1,4 @@
-package com.adamstyrc.zingerlib;
+package com.adamstyrc.biscuitlib;
 
 import android.graphics.Matrix;
 

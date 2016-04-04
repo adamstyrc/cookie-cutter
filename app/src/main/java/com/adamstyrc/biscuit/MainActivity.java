@@ -1,11 +1,11 @@
-package com.adamstyrc.zinger;
+package com.adamstyrc.biscuit;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.adamstyrc.zingerlib.ZingerImageView;
+import com.adamstyrc.biscuitlib.BiscuitImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        ZingerImageView ivZinger = (ZingerImageView) findViewById(R.id.ivZinger);
-        ResultActivity.startResultActivity(this, ivZinger.getCroppedBitmap());
+        BiscuitImageView ivBiscuit = (BiscuitImageView) findViewById(R.id.ivBiscuit);
+        ResultActivity.startResultActivity(this, ivBiscuit.getCroppedBitmap());
 
         return true;
     }

@@ -1,4 +1,4 @@
-package com.adamstyrc.zingerlib;
+package com.adamstyrc.biscuitlib;
 
 import android.graphics.Matrix;
 import android.graphics.PointF;
@@ -9,7 +9,7 @@ import android.widget.ImageView;
 /**
  * Created by adamstyrc on 31/03/16.
  */
-public class ZingerTouchListener implements View.OnTouchListener {
+public class BiscuitTouchListener implements View.OnTouchListener {
 
     private Mode mode = Mode.NONE;
 
@@ -22,7 +22,7 @@ public class ZingerTouchListener implements View.OnTouchListener {
     PointF scaleCenterPoint = new PointF();
     float fingersDistance = 1f;
 
-    public ZingerTouchListener(Circle cropCircle) {
+    public BiscuitTouchListener(Circle cropCircle) {
         this.circle = cropCircle;
     }
 

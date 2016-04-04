@@ -1,4 +1,4 @@
-package com.adamstyrc.zingerlib;
+package com.adamstyrc.biscuitlib;
 
 /**
  * Created by adamstyrc on 01/04/16.

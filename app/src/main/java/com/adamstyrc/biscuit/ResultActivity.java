@@ -1,4 +1,4 @@
-package com.adamstyrc.zinger;
+package com.adamstyrc.biscuit;
 
 import android.content.Context;
 import android.content.Intent;

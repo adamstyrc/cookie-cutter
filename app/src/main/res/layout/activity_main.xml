@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.adamstyrc.zinger.MainActivity"
+    tools:context="com.adamstyrc.biscuit.MainActivity"
     android:background="@android:color/black">
 
-    <com.adamstyrc.zingerlib.ZingerImageView
-        android:id="@+id/ivZinger"
+    <com.adamstyrc.biscuitlib.BiscuitImageView
+        android:id="@+id/ivBiscuit"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/img3"/>
