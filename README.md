@@ -4,11 +4,13 @@ Android library to crop images by moving &amp; scaling image.
 ![alt tag](https://raw.githubusercontent.com/adamstyrc/Biscuit/master/biscuit1.jpeg)
 
 Demo:
+--------
 
 ![alt tag](https://raw.githubusercontent.com/adamstyrc/Biscuit/master/biscuitVideo.gif)
 
 
 Usage:
+--------
 
 Add **BiscuitImageView** to your layout:
 
@@ -21,5 +23,6 @@ Add **BiscuitImageView** to your layout:
 ```
 
 Download:
+--------
 
 _in progress_
