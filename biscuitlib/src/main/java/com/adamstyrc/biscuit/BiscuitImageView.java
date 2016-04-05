@@ -65,7 +65,7 @@ public class BiscuitImageView extends ImageView {
             public void onGlobalLayout() {
                 getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 biscuitParams.setCircle(new Circle(getWidth() / 2, getHeight() / 2, circleRadius));
-
+                setImageCentered();
                 setOnTouchListener(new BiscuitTouchListener(biscuitParams, getImageMatrix()));
             }
         });
@@ -75,10 +75,22 @@ public class BiscuitImageView extends ImageView {
         Matrix matrix = getImageMatrix();
         Bitmap bitmap = getBitmap();
 
-        if (bitmap != null) {
+        if (bitmap != null && biscuitParams.getCircle() != null) {
             RectF drawableRect = new RectF(0, 0, bitmap.getWidth(), bitmap.getHeight());
 //            RectF viewRect = new RectF(0, 0, 2 * circleRadius, 2 * circleRadius);
-            RectF viewRect = new RectF(0, 0, getWidth(), getHeight());
+            Circle circle = biscuitParams.getCircle();
+            RectF viewRect;
+            if (bitmap.getWidth() > bitmap.getHeight()) {
+                float scale = (float) circle.getDiameter() / bitmap.getHeight();
+                float scaledWidth = scale * bitmap.getWidth();
+                float x = (scaledWidth - getWidth()) / 2;
+                viewRect = new RectF(-x, circle.getTopBound(), getWidth() + x, circle.getBottomBound());
+            } else {
+                float scale = (float) circle.getDiameter() / bitmap.getWidth();
+                float scaledHeight = scale * bitmap.getHeight();
+                float y = (scaledHeight - getHeight()) / 2;
+                viewRect = new RectF(circle.getLeftBound(), -y, circle.getRightBound(), getHeight() + y);
+            }
             matrix.setRectToRect(drawableRect, viewRect, Matrix.ScaleToFit.CENTER);
             setImageMatrix(matrix);
         }

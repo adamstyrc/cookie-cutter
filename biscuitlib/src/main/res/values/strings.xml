@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Biscuit</string>
+    <string name="move_scale_your_photo"><![CDATA[Move & scale your photo]]></string>
 </resources>

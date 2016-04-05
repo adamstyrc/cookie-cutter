@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
+
+    <com.adamstyrc.biscuit.BiscuitImageView
+        android:id="@+id/ivCrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_centerHorizontal="true"
+        android:padding="8dp"
+        android:textColor="@android:color/white"
+        android:textSize="18dp"
+        android:text="@string/move_scale_your_photo"
+        />
+
+    <TextView
+        android:id="@+id/tvCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_alignParentBottom="true"
+        android:padding="8dp"
+        android:textColor="@android:color/white"
+        android:textSize="18dp"
+        android:text="CANCEL"
+        />
+
+    <TextView
+        android:id="@+id/tvSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:padding="8dp"
+        android:textColor="@android:color/white"
+        android:textSize="18dp"
+        android:text="SAVE"
+        />
+
+</RelativeLayout>

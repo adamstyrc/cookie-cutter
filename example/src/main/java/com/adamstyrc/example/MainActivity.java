@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.adamstyrc.biscuit.BiscuitImageView;
+import com.adamstyrc.biscuit.CiachoActivity;
 import com.adamstyrc.biscuit.ImageUtils;
 import com.adamstyrc.biscuit.Logger;
 
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
                     Uri imageUri = data.getData();
                     ivCrop.setImageURI(imageUri);
                     Bitmap bitmap = ((BitmapDrawable) ivCrop.getDrawable()).getBitmap();
+                    CiachoActivity.startCiachoActivity(this, bitmap);
                     ivCrop.setImageBitmap(bitmap);
                 } catch (Exception e) {
                     Logger.log(e.getMessage());
