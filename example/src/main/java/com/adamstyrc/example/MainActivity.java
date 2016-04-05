@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.adamstyrc.biscuit.BiscuitImageView;
+import com.adamstyrc.biscuit.BiscuitShape;
 import com.adamstyrc.biscuit.CiachoActivity;
 import com.adamstyrc.biscuit.ImageUtils;
 import com.adamstyrc.biscuit.Logger;
@@ -33,18 +34,31 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0, 0, 0, "Crop");
         menu.add(0, 1, 1, "Choose from gallery");
+        menu.add(0, 2, 1, "Shape circle");
+        menu.add(0, 3, 1, "Shape hole");
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == 0) {
-            Bitmap bitmap = ivCrop.getCroppedBitmap();
-            Bitmap circularBitmap = ImageUtils.getCircularBitmap(bitmap);
-            ResultActivity.startResultActivity(this, circularBitmap);
-        } else {
-            choosePhotoFromGallery();
+        switch (item.getItemId()) {
+            case 0:
+                Bitmap bitmap = ivCrop.getCroppedBitmap();
+                Bitmap circularBitmap = ImageUtils.getCircularBitmap(bitmap);
+                ResultActivity.startResultActivity(this, circularBitmap);
+                break;
+            case 1:
+                choosePhotoFromGallery();
+                break;
+            case 2:
+                ivCrop.getBiscuitParams().setShape(BiscuitShape.CIRCLE);
+                break;
+            case 3:
+                ivCrop.getBiscuitParams().setShape(BiscuitShape.HOLE);
+                break;
+
         }
+        ivCrop.invalidate();
 
         return true;
     }
@@ -61,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                     Uri imageUri = data.getData();
                     ivCrop.setImageURI(imageUri);
                     Bitmap bitmap = ((BitmapDrawable) ivCrop.getDrawable()).getBitmap();
-                    CiachoActivity.startCiachoActivity(this, bitmap);
+//                    CiachoActivity.startCiachoActivity(this, bitmap);
                     ivCrop.setImageBitmap(bitmap);
                 } catch (Exception e) {
                     Logger.log(e.getMessage());
