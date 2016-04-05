@@ -7,4 +7,5 @@ public enum BiscuitShape {
 
     CIRCLE,
     HOLE,
+    SQUARE;
 }

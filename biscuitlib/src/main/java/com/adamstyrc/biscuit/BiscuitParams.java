@@ -19,6 +19,7 @@ public class BiscuitParams {
 
     private HoleParams holeParams;
     private CircleParams circleParams;
+    private SquareParams squareParams;
 
     Circle getCircle() {
         return circle;
@@ -56,6 +57,7 @@ public class BiscuitParams {
 
         holeParams = new HoleParams();
         circleParams = new CircleParams();
+        squareParams = new SquareParams();
     }
 
     public HoleParams getHoleParams() {
@@ -64,6 +66,10 @@ public class BiscuitParams {
 
     public CircleParams getCircleParams() {
         return circleParams;
+    }
+
+    public SquareParams getSquareParams() {
+        return squareParams;
     }
 
     public class HoleParams {
@@ -105,23 +111,23 @@ public class BiscuitParams {
         }
     }
 
-//    public class SquareParams {
-//        Paint paint;
-//
-//        public SquareParams() {
-//            paint = new Paint();
-//            paint.setAntiAlias(true);
-//            paint.setColor(Color.WHITE);
-//            paint.setStrokeWidth(5);
-//            paint.setStyle(Paint.Style.STROKE);
-//        }
-//
-//        public void SquareParams(float strokeWidth) {
-//            paint.setStrokeWidth(strokeWidth);
-//        }
-//
-//        public void setColor(int color) {
-//            paint.setColor(color);
-//        }
-//    }
+    public class SquareParams {
+        Paint paint;
+
+        public SquareParams() {
+            paint = new Paint();
+            paint.setAntiAlias(true);
+            paint.setColor(Color.WHITE);
+            paint.setStrokeWidth(5);
+            paint.setStyle(Paint.Style.STROKE);
+        }
+
+        public void SquareParams(float strokeWidth) {
+            paint.setStrokeWidth(strokeWidth);
+        }
+
+        public void setColor(int color) {
+            paint.setColor(color);
+        }
+    }
 }

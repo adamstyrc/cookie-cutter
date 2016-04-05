@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         menu.add(0, 1, 1, "Choose from gallery");
         menu.add(0, 2, 1, "Shape circle");
         menu.add(0, 3, 1, "Shape hole");
+        menu.add(0, 4, 1, "Shape square");
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -55,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 3:
                 ivCrop.getBiscuitParams().setShape(BiscuitShape.HOLE);
+                break;
+            case 4:
+                ivCrop.getBiscuitParams().setShape(BiscuitShape.SQUARE);
                 break;
 
         }

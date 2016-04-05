@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
@@ -95,15 +96,23 @@ public class BiscuitImageView extends ImageView {
             return;
         }
 
+        Paint paint;
         switch (biscuitParams.getShape()) {
             case CIRCLE:
-                canvas.drawCircle(circle.getCx(), circle.getCy(), circle.getRadius(), biscuitParams.getCircleParams().paint);
+                paint = biscuitParams.getCircleParams().paint;
+                canvas.drawCircle(circle.getCx(), circle.getCy(), circle.getRadius(), paint);
                 break;
 
             case HOLE:
                 BiscuitParams.HoleParams hole = biscuitParams.getHoleParams();
+                paint = hole.paint;
                 Path path = hole.path;
-                canvas.drawPath(path, hole.paint);
+                canvas.drawPath(path, paint);
+                break;
+
+            case SQUARE:
+                paint = biscuitParams.getSquareParams().paint;
+                canvas.drawRect(circle.getLeftBound(), circle.getTopBound(), circle.getRightBound(), circle.getBottomBound(), paint);
                 break;
         }
     }
