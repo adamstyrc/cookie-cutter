@@ -4,9 +4,9 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -51,10 +51,12 @@ public class BiscuitImageView extends ImageView {
         setScaleType(ScaleType.MATRIX);
 
         circlePaint = new Paint();
-        circlePaint.setAntiAlias(true);
-        circlePaint.setColor(Color.WHITE);
-        circlePaint.setStrokeWidth(5);
-        circlePaint.setStyle(Paint.Style.STROKE);
+//        circlePaint.setAntiAlias(true);
+//        circlePaint.setColor(Color.WHITE);
+//        circlePaint.setStrokeWidth(5);
+//        circlePaint.setStyle(Paint.Style.STROKE);
+
+//        circlePaint.setColor(Color.RED);
 
         biscuitParams = new BiscuitParams();
         circleRadius = 400;
@@ -64,7 +66,7 @@ public class BiscuitImageView extends ImageView {
             @Override
             public void onGlobalLayout() {
                 getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                biscuitParams.setCircle(new Circle(getWidth() / 2, getHeight() / 2, circleRadius));
+                biscuitParams.updateWithView(getWidth(), getHeight(), circleRadius);
                 setImageCentered();
                 setOnTouchListener(new BiscuitTouchListener(biscuitParams, getImageMatrix()));
             }
@@ -100,11 +102,22 @@ public class BiscuitImageView extends ImageView {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        int cx = getWidth() / 2;
-        int cy = getHeight() / 2;
+        Circle circle = biscuitParams.getCircle();
+        if (circle == null) {
+            return;
+        }
 
+        switch (biscuitParams.getShape()) {
+            case CIRCLE:
+                canvas.drawCircle(circle.getCx(), circle.getCy(), circle.getRadius(), circlePaint);
+                break;
 
-        canvas.drawCircle(cx, cy, circleRadius, circlePaint);
+            case HOLE:
+                BiscuitParams.Hole hole = biscuitParams.getHole();
+                Path path = hole.getPath();
+                canvas.drawPath(path, hole.getPaint());
+                break;
+        }
     }
 
     @Override
