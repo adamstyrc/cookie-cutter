@@ -1,12 +1,12 @@
 # Biscuit
 Android library to crop images by moving &amp; scaling image.
 
-![alt tag](https://raw.githubusercontent.com/adamstyrc/Biscuit/master/biscuit1.jpeg)
+![alt tag](https://github.com/adamstyrc/cookie-cutter/blob/master/logo.jpeg)
 
 Demo:
 --------
 
-![alt tag](https://raw.githubusercontent.com/adamstyrc/Biscuit/master/biscuitVideo.gif)
+![alt tag](https://github.com/adamstyrc/cookie-cutter/blob/master/video.gif)
 
 
 Usage:
