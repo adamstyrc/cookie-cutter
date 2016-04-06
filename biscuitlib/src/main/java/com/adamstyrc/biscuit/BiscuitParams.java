@@ -12,6 +12,7 @@ public class BiscuitParams {
     private int circleRadius = 400;
     private Circle circle;
     private float maxZoom = 4;
+    private int minImageSize = 200;
     private BiscuitShape shape = BiscuitShape.HOLE;
 
     private int width;
@@ -20,6 +21,7 @@ public class BiscuitParams {
     private HoleParams holeParams;
     private CircleParams circleParams;
     private SquareParams squareParams;
+
 
     Circle getCircle() {
         return circle;
@@ -39,6 +41,14 @@ public class BiscuitParams {
 
     public void setMaxZoom(float maxZoom) {
         this.maxZoom = maxZoom;
+    }
+
+    public int getMinImageSize() {
+        return minImageSize;
+    }
+
+    public void setMinImageSize(int minImageSize) {
+        this.minImageSize = minImageSize;
     }
 
     public void setShape(BiscuitShape shape) {

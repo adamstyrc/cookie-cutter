@@ -109,8 +109,15 @@ public class BiscuitTouchListener implements View.OnTouchListener {
             Logger.log("Scaling exceeded: bottom " + scale);
         }
 
-        if (scale * matrixParams.getScaleWidth() > biscuitParams.getMaxZoom()) {
+        float currentScale = scale * matrixParams.getScaleWidth();
+        if (currentScale > biscuitParams.getMaxZoom()) {
             scale = biscuitParams.getMaxZoom() / matrixParams.getScaleWidth();
+        }
+
+        float croppedImageSize = circle.getDiameter() / currentScale;
+        Logger.log("croppedImageSize: " + croppedImageSize);
+        if (croppedImageSize < biscuitParams.getMinImageSize()) {
+            scale = circle.getDiameter() / biscuitParams.getMinImageSize() / matrixParams.getScaleWidth();
         }
 
         matrix.set(savedMatrix);
