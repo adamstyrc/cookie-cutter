@@ -8,9 +8,15 @@ import android.util.Log;
  */
 public class Logger {
 
+    private static boolean sEnabled = false;
+
     public static void log(String message) {
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG || sEnabled) {
             Log.d("Biscuit", message);
         }
+    }
+
+    public static void setEnabled(boolean sEnabled) {
+        Logger.sEnabled = sEnabled;
     }
 }
