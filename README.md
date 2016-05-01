@@ -16,10 +16,15 @@ Add **CookieCutterImageView** to your layout:
 
 ```
     <com.adamstyrc.cookiecutter.CookieCutterImageView
-        android:id="@+id/ivCookieCutter"
+        android:id="@+id/ivCrop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/your_image"/>
+```
+
+To get bitmap from currently selected region use below method:
+```
+CookieCutterImageView.getCroppedBitmap();
 ```
 
 Download:
