@@ -1,4 +1,4 @@
-package com.adamstyrc.biscuit;
+package com.adamstyrc.cookiecutter;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

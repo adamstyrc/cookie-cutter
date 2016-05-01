@@ -1,4 +1,4 @@
-package com.adamstyrc.biscuit;
+package com.adamstyrc.cookiecutter;
 
 import android.util.Log;
 
@@ -12,7 +12,7 @@ public class Logger {
 
     public static void log(String message) {
         if (BuildConfig.DEBUG || sEnabled) {
-            Log.d("Biscuit", message);
+            Log.d("cookie-cutter", message);
         }
     }
 

@@ -4,8 +4,8 @@
     android:layout_height="match_parent"
     android:background="@android:color/black">
 
-    <com.adamstyrc.biscuit.BiscuitImageView
-        android:id="@+id/ivBiscuit"
+    <com.adamstyrc.cookiecutter.CookieCutterImageView
+        android:id="@+id/ivCookieCutter"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/img3"/>

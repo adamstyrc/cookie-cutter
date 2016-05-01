@@ -1,4 +1,4 @@
-package com.adamstyrc.biscuit;
+package com.adamstyrc.cookiecutter;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

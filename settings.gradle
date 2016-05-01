@@ -1,1 +1,1 @@
-include ':example', ':biscuitlib'
+include ':example', ':cookie-cutter'

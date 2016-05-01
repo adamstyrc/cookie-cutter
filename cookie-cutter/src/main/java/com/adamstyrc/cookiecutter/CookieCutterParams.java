@@ -1,4 +1,4 @@
-package com.adamstyrc.biscuit;
+package com.adamstyrc.cookiecutter;
 
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -7,13 +7,13 @@ import android.graphics.Path;
 /**
  * Created by adamstyrc on 04/04/16.
  */
-public class BiscuitParams {
+public class CookieCutterParams {
 
     private int circleRadius = 400;
     private Circle circle;
     private float maxZoom = 4;
     private int minImageSize = 200;
-    private BiscuitShape shape = BiscuitShape.HOLE;
+    private CookieCutterShape shape = CookieCutterShape.HOLE;
 
     private int width;
     private int height;
@@ -51,11 +51,11 @@ public class BiscuitParams {
         this.minImageSize = minImageSize;
     }
 
-    public void setShape(BiscuitShape shape) {
+    public void setShape(CookieCutterShape shape) {
         this.shape = shape;
     }
 
-    public BiscuitShape getShape() {
+    public CookieCutterShape getShape() {
         return shape;
     }
 

@@ -1,9 +1,9 @@
-package com.adamstyrc.biscuit;
+package com.adamstyrc.cookiecutter;
 
 /**
  * Created by adamstyrc on 05/04/16.
  */
-public enum BiscuitShape {
+public enum CookieCutterShape {
 
     CIRCLE,
     HOLE,

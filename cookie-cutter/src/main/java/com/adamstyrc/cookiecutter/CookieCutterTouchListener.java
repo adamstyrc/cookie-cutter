@@ -1,4 +1,4 @@
-package com.adamstyrc.biscuit;
+package com.adamstyrc.cookiecutter;
 
 import android.graphics.Matrix;
 import android.graphics.PointF;
@@ -9,12 +9,12 @@ import android.widget.ImageView;
 /**
  * Created by adamstyrc on 31/03/16.
  */
-public class BiscuitTouchListener implements View.OnTouchListener {
+public class CookieCutterTouchListener implements View.OnTouchListener {
 
     private final Circle circle;
     private Mode mode = Mode.NONE;
 
-    private BiscuitParams biscuitParams;
+    private CookieCutterParams cookieCutterParams;
 
     Matrix matrix = new Matrix();
     Matrix savedMatrix = new Matrix();
@@ -23,9 +23,9 @@ public class BiscuitTouchListener implements View.OnTouchListener {
     PointF scaleCenterPoint = new PointF();
     float fingersDistance = 1f;
 
-    public BiscuitTouchListener(BiscuitParams biscuitParams, Matrix matrix) {
-        this.biscuitParams = biscuitParams;
-        circle = biscuitParams.getCircle();
+    public CookieCutterTouchListener(CookieCutterParams cookieCutterParams, Matrix matrix) {
+        this.cookieCutterParams = cookieCutterParams;
+        circle = cookieCutterParams.getCircle();
 
         this.matrix.set(matrix);
         this.savedMatrix.set(matrix);
@@ -110,14 +110,14 @@ public class BiscuitTouchListener implements View.OnTouchListener {
         }
 
         float currentScale = scale * matrixParams.getScaleWidth();
-        if (currentScale > biscuitParams.getMaxZoom()) {
-            scale = biscuitParams.getMaxZoom() / matrixParams.getScaleWidth();
+        if (currentScale > cookieCutterParams.getMaxZoom()) {
+            scale = cookieCutterParams.getMaxZoom() / matrixParams.getScaleWidth();
         }
 
         float croppedImageSize = circle.getDiameter() / currentScale;
         Logger.log("croppedImageSize: " + croppedImageSize);
-        if (croppedImageSize < biscuitParams.getMinImageSize()) {
-            scale = circle.getDiameter() / biscuitParams.getMinImageSize() / matrixParams.getScaleWidth();
+        if (croppedImageSize < cookieCutterParams.getMinImageSize()) {
+            scale = circle.getDiameter() / cookieCutterParams.getMinImageSize() / matrixParams.getScaleWidth();
         }
 
         matrix.set(savedMatrix);

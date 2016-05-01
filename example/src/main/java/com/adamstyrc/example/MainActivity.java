@@ -10,21 +10,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.adamstyrc.biscuit.BiscuitImageView;
-import com.adamstyrc.biscuit.BiscuitShape;
-import com.adamstyrc.biscuit.ImageUtils;
-import com.adamstyrc.biscuit.Logger;
+import com.adamstyrc.cookiecutter.CookieCutterImageView;
+import com.adamstyrc.cookiecutter.CookieCutterShape;
+import com.adamstyrc.cookiecutter.ImageUtils;
+import com.adamstyrc.cookiecutter.Logger;
 
 public class MainActivity extends AppCompatActivity {
 
-    BiscuitImageView ivCrop;
+    CookieCutterImageView ivCrop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ivCrop = (BiscuitImageView) findViewById(R.id.ivBiscuit);
+        ivCrop = (CookieCutterImageView) findViewById(R.id.ivCookieCutter);
     }
 
     @Override
@@ -49,13 +49,13 @@ public class MainActivity extends AppCompatActivity {
                 choosePhotoFromGallery();
                 break;
             case 2:
-                ivCrop.getBiscuitParams().setShape(BiscuitShape.CIRCLE);
+                ivCrop.getParams().setShape(CookieCutterShape.CIRCLE);
                 break;
             case 3:
-                ivCrop.getBiscuitParams().setShape(BiscuitShape.HOLE);
+                ivCrop.getParams().setShape(CookieCutterShape.HOLE);
                 break;
             case 4:
-                ivCrop.getBiscuitParams().setShape(BiscuitShape.SQUARE);
+                ivCrop.getParams().setShape(CookieCutterShape.SQUARE);
                 break;
 
         }

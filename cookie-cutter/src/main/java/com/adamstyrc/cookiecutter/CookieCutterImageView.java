@@ -1,4 +1,4 @@
-package com.adamstyrc.biscuit;
+package com.adamstyrc.cookiecutter;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -17,29 +17,29 @@ import android.widget.ImageView;
 /**
  * Created by adamstyrc on 31/03/16.
  */
-public class BiscuitImageView extends ImageView {
+public class CookieCutterImageView extends ImageView {
 
-    private BiscuitParams biscuitParams;
+    private CookieCutterParams cookieCutterParams;
 
-    public BiscuitImageView(Context context) {
+    public CookieCutterImageView(Context context) {
         super(context);
         init();
     }
 
-    public BiscuitImageView(Context context, AttributeSet attrs) {
+    public CookieCutterImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         init();
     }
 
-    public BiscuitImageView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CookieCutterImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         init();
     }
 
     @TargetApi(value = 21)
-    public BiscuitImageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public CookieCutterImageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
 
         init();
@@ -48,16 +48,16 @@ public class BiscuitImageView extends ImageView {
     public void init() {
         setScaleType(ScaleType.MATRIX);
 
-        biscuitParams = new BiscuitParams();
+        cookieCutterParams = new CookieCutterParams();
 
         ViewTreeObserver vto = getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                biscuitParams.updateWithView(getWidth(), getHeight());
+                cookieCutterParams.updateWithView(getWidth(), getHeight());
                 setImageCentered();
-                setOnTouchListener(new BiscuitTouchListener(biscuitParams, getImageMatrix()));
+                setOnTouchListener(new CookieCutterTouchListener(cookieCutterParams, getImageMatrix()));
             }
         });
     }
@@ -66,10 +66,10 @@ public class BiscuitImageView extends ImageView {
         Matrix matrix = getImageMatrix();
         Bitmap bitmap = getBitmap();
 
-        if (bitmap != null && biscuitParams.getCircle() != null) {
+        if (bitmap != null && cookieCutterParams.getCircle() != null) {
             RectF drawableRect = new RectF(0, 0, bitmap.getWidth(), bitmap.getHeight());
 
-            Circle circle = biscuitParams.getCircle();
+            Circle circle = cookieCutterParams.getCircle();
             RectF viewRect;
             if (bitmap.getWidth() > bitmap.getHeight()) {
                 float scale = (float) circle.getDiameter() / bitmap.getHeight();
@@ -91,27 +91,27 @@ public class BiscuitImageView extends ImageView {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        Circle circle = biscuitParams.getCircle();
+        Circle circle = cookieCutterParams.getCircle();
         if (circle == null) {
             return;
         }
 
         Paint paint;
-        switch (biscuitParams.getShape()) {
+        switch (cookieCutterParams.getShape()) {
             case CIRCLE:
-                paint = biscuitParams.getCircleParams().paint;
+                paint = cookieCutterParams.getCircleParams().paint;
                 canvas.drawCircle(circle.getCx(), circle.getCy(), circle.getRadius(), paint);
                 break;
 
             case HOLE:
-                BiscuitParams.HoleParams hole = biscuitParams.getHoleParams();
+                CookieCutterParams.HoleParams hole = cookieCutterParams.getHoleParams();
                 paint = hole.paint;
                 Path path = hole.path;
                 canvas.drawPath(path, paint);
                 break;
 
             case SQUARE:
-                paint = biscuitParams.getSquareParams().paint;
+                paint = cookieCutterParams.getSquareParams().paint;
                 canvas.drawRect(circle.getLeftBound(), circle.getTopBound(), circle.getRightBound(), circle.getBottomBound(), paint);
                 break;
         }
@@ -132,7 +132,7 @@ public class BiscuitImageView extends ImageView {
 
         setImageCentered();
 
-        setOnTouchListener(new BiscuitTouchListener(biscuitParams, getImageMatrix()));
+        setOnTouchListener(new CookieCutterTouchListener(cookieCutterParams, getImageMatrix()));
     }
 
     public Bitmap getCroppedBitmap() {
@@ -140,7 +140,7 @@ public class BiscuitImageView extends ImageView {
 
         MatrixParams matrixParams = MatrixParams.fromMatrix(matrix);
         Bitmap bitmap = getBitmap();
-        Circle circle = biscuitParams.getCircle();
+        Circle circle = cookieCutterParams.getCircle();
 
         int size = (int) (circle.getDiameter() / matrixParams.getScaleWidth());
         size -= 1;
@@ -157,8 +157,8 @@ public class BiscuitImageView extends ImageView {
         return croppedBitmap;
     }
 
-    public BiscuitParams getBiscuitParams() {
-        return biscuitParams;
+    public CookieCutterParams getParams() {
+        return cookieCutterParams;
     }
 
     private Bitmap getBitmap() {
