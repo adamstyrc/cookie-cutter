@@ -30,4 +30,9 @@ CookieCutterImageView.getCroppedBitmap();
 Download:
 --------
 
-_in progress_
+Download latest AAR with Gradle:
+```
+compile 'com.adamstyrc.cookiecutter:cookie-cutter:1.0.0'
+```
+
+Required Android >=4.0.
