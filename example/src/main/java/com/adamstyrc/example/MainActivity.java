@@ -3,6 +3,7 @@ package com.adamstyrc.example;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -77,9 +78,11 @@ public class MainActivity extends AppCompatActivity {
             case 1:
                 try {
                     Uri imageUri = data.getData();
-                    ivCrop.setImageURI(imageUri);
-//                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-//                    ivCrop.setImageBitmap(bitmap);
+//                    ivCrop.setImageURI(imageUri);
+
+                    Point screenSize = ImageUtils.getScreenSize(this);
+                    Bitmap scaledBitmap = ImageUtils.decodeUriToScaledBitmap(this, imageUri, screenSize.x, screenSize.y);
+                    ivCrop.setImageBitmap(scaledBitmap);
 
                 } catch (Exception e) {
                     Logger.log(e.getMessage());
