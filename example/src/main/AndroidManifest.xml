@@ -10,7 +10,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="com.adamstyrc.example.MainActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:hardwareAccelerated="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
