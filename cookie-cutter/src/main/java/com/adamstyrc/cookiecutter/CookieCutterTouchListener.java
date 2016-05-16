@@ -139,7 +139,7 @@ public class CookieCutterTouchListener implements View.OnTouchListener {
 
         int circleCenterX = view.getWidth() / 2;
         int circleCenterY = view.getHeight() / 2;
-        int circleRadius = 400;
+        int circleRadius = cookieCutterParams.getCircleRadius();
 
         float width = view.getDrawable().getIntrinsicWidth() * scaleWidth;
         float height = view.getDrawable().getIntrinsicHeight() * scaleHeight;

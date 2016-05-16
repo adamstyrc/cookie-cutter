@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -49,6 +50,7 @@ public class CookieCutterImageView extends ImageView {
         setScaleType(ScaleType.MATRIX);
 
         cookieCutterParams = new CookieCutterParams();
+        setDefaultRadius();
 
         ViewTreeObserver vto = getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -179,5 +181,11 @@ public class CookieCutterImageView extends ImageView {
         y = Math.max(y, 0);
         y /= matrixParams.getScaleWidth();
         return y;
+    }
+
+    private void setDefaultRadius() {
+        Point screenSize = ImageUtils.getScreenSize(getContext());
+        int minScreenSize = Math.min(screenSize.x, screenSize.y);
+        cookieCutterParams.setCircleRadius((int) (minScreenSize * 0.4f));
     }
 }
