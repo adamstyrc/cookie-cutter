@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +15,8 @@ import com.adamstyrc.cookiecutter.CookieCutterImageView;
 import com.adamstyrc.cookiecutter.CookieCutterShape;
 import com.adamstyrc.cookiecutter.ImageUtils;
 import com.adamstyrc.cookiecutter.Logger;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -75,8 +78,9 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     Uri imageUri = data.getData();
                     ivCrop.setImageURI(imageUri);
-                    Bitmap bitmap = ((BitmapDrawable) ivCrop.getDrawable()).getBitmap();
-                    ivCrop.setImageBitmap(bitmap);
+//                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+//                    ivCrop.setImageBitmap(bitmap);
+
                 } catch (Exception e) {
                     Logger.log(e.getMessage());
                 }
