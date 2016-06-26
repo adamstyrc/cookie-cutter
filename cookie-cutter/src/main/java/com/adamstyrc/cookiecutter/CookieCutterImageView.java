@@ -52,16 +52,22 @@ public class CookieCutterImageView extends ImageView {
         cookieCutterParams = new CookieCutterParams();
         setDefaultRadius();
 
-        ViewTreeObserver vto = getViewTreeObserver();
-        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                cookieCutterParams.updateWithView(getWidth(), getHeight());
-                setImageCentered();
-                setOnTouchListener(new CookieCutterTouchListener(cookieCutterParams, getImageMatrix()));
-            }
-        });
+        if (getDrawable() != null) {
+            ViewTreeObserver vto = getViewTreeObserver();
+            vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    onImageLoaded();
+                }
+            });
+        }
+    }
+
+    private void onImageLoaded() {
+        cookieCutterParams.updateWithView(getWidth(), getHeight());
+        setImageCentered();
+        setOnTouchListener(new CookieCutterTouchListener(cookieCutterParams, getImageMatrix()));
     }
 
     private void setImageCentered() {
@@ -132,9 +138,7 @@ public class CookieCutterImageView extends ImageView {
     public void setImageBitmap(Bitmap bm) {
         super.setImageBitmap(bm);
 
-        setImageCentered();
-
-        setOnTouchListener(new CookieCutterTouchListener(cookieCutterParams, getImageMatrix()));
+        onImageLoaded();
     }
 
     public Bitmap getCroppedBitmap() {
