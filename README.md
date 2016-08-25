@@ -42,7 +42,7 @@ Download:
 
 Download latest AAR with Gradle:
 ```
-compile 'com.adamstyrc.cookiecutter:cookie-cutter:1.0.0'
+compile 'com.adamstyrc.cookiecutter:cookie-cutter:1.0.2'
 ```
 
 Required Android >=4.0 (API 15)
