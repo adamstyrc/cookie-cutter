@@ -132,7 +132,7 @@ public class CookieCutterParams {
             paint.setStyle(Paint.Style.STROKE);
         }
 
-        public void SquareParams(float strokeWidth) {
+        public void setStrokeWidth(float strokeWidth) {
             paint.setStrokeWidth(strokeWidth);
         }
 
