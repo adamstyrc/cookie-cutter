@@ -27,6 +27,16 @@ To get bitmap from currently selected region use below method:
 CookieCutterImageView.getCroppedBitmap();
 ```
 
+There are few adjustable parameters that you can access with:
+```
+CookieCutterImageView.getParams()
+```
+
+For example it's possible to change the shape of the cookie-cutter overlay with method:
+```
+CookieCutterImageView.getParams().setShape();
+```
+
 Download:
 --------
 
@@ -35,4 +45,4 @@ Download latest AAR with Gradle:
 compile 'com.adamstyrc.cookiecutter:cookie-cutter:1.0.0'
 ```
 
-Required Android >=4.0.
+Required Android >=4.0 (API 15)
