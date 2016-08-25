@@ -1,5 +1,6 @@
 # cookie-cutter
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-cookie--cutter-green.svg?style=true)](https://android-arsenal.com/details/1/4221)
+
 Android library to crop images by moving &amp; scaling image.
 
 ![alt tag](https://github.com/adamstyrc/cookie-cutter/blob/master/logo.jpeg)
