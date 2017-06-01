@@ -42,8 +42,12 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case 0:
                 Bitmap bitmap = ivCrop.getCroppedBitmap();
-                Bitmap circularBitmap = ImageUtils.getCircularBitmap(bitmap);
-                ResultActivity.startResultActivity(this, circularBitmap);
+                Bitmap b = null;
+                if (ivCrop.getParams().getShape() == CookieCutterShape.CIRCLE)
+                    b = ImageUtils.getCircularBitmap(bitmap);
+                else if (ivCrop.getParams().getShape() == CookieCutterShape.SQUARE)
+                    b = ImageUtils.getSquareBitmap(bitmap);
+                ResultActivity.startResultActivity(this, b);
                 break;
             case 1:
                 choosePhotoFromGallery();
