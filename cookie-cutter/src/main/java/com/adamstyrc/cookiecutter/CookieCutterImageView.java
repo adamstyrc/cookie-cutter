@@ -153,6 +153,12 @@ public class CookieCutterImageView extends ImageView {
         int y = getCropTop(matrixParams, circle);
         int x = getCropLeft(matrixParams, circle);
 
+        if (x + size > bitmap.getWidth()) {
+            x = bitmap.getWidth() - size;
+        }
+        if (y + size > bitmap.getHeight()) {
+            y = bitmap.getHeight() - size;
+        }
         Logger.log("x: " + x + " y: " + y + " size: " + size);
         Bitmap croppedBitmap = Bitmap.createBitmap(bitmap,
                 x,
