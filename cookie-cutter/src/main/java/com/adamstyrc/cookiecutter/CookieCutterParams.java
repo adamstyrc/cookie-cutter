@@ -93,6 +93,10 @@ public class CookieCutterParams {
             paint.setColor(Color.parseColor("#AA000000"));
         }
 
+        public void setColor(int color) {
+            paint.setColor(color);
+        }
+
         private void setPath() {
             path = new Path();
             path.setFillType(Path.FillType.EVEN_ODD);
