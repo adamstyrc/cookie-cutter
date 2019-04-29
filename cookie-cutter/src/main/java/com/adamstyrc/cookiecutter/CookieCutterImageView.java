@@ -149,7 +149,6 @@ public class CookieCutterImageView extends ImageView {
         Circle circle = cookieCutterParams.getCircle();
 
         int size = (int) (circle.getDiameter() / matrixParams.getScaleWidth());
-        size -= 1;
         int y = getCropTop(matrixParams, circle);
         int x = getCropLeft(matrixParams, circle);
 
@@ -172,19 +171,19 @@ public class CookieCutterImageView extends ImageView {
     }
 
     private int getCropLeft(MatrixParams matrixParams, Circle circle) {
-        int translationX = (int) matrixParams.getX();
-        int x = circle.getLeftBound() - translationX;
+        float translationX = matrixParams.getX();
+        float x = circle.getLeftBound() - translationX;
         x = Math.max(x, 0);
         x /= matrixParams.getScaleWidth();
-        return x;
+        return (int) x;
     }
 
     private int getCropTop(MatrixParams matrixParams, Circle circle) {
-        int translationY = (int) matrixParams.getY();
-        int y = circle.getTopBound() - translationY;
+        float translationY = matrixParams.getY();
+        float y = circle.getTopBound() - translationY;
         y = Math.max(y, 0);
         y /= matrixParams.getScaleWidth();
-        return y;
+        return (int) y;
     }
 
     private void setDefaultRadius() {
