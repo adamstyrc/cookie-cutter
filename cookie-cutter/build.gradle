@@ -27,16 +27,16 @@ android {
 
 dependencies {
 }
-
-apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'
-
-publishing {
-    publications {
-        maven(MavenPublication) {
-            artifactId = PUBLISH_ARTIFACT_ID
-            groupId = PUBLISH_GROUP_ID
-            version = PUBLISH_VERSION
-            artifact "${buildDir}/outputs/aar/${project.name}-release.aar"
-        }
-    }
-}
+//
+//apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'
+//
+//publishing {
+//    publications {
+//        maven(MavenPublication) {
+//            artifactId = PUBLISH_ARTIFACT_ID
+//            groupId = PUBLISH_GROUP_ID
+//            version = PUBLISH_VERSION
+//            artifact "${buildDir}/outputs/aar/${project.name}-release.aar"
+//        }
+//    }
+//}

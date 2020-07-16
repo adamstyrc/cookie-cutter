@@ -129,31 +129,23 @@ public class CookieCutterTouchListener implements View.OnTouchListener {
         float translationX = event.getX() - firstTouchPoint.x;
         float translationY = event.getY() - firstTouchPoint.y;
 
-        float[] matrixValues = new float[9];
-        savedMatrix.getValues(matrixValues);
+        MatrixParams matrixParams = MatrixParams.fromMatrix(savedMatrix);
 
-        float scaleWidth = matrixValues[0];
-        float scaleHeight = matrixValues[4];
-        float x = matrixValues[2];
-        float y = matrixValues[5];
+        float width = view.getDrawable().getIntrinsicWidth() * matrixParams.getScaleWidth();
+        float height = view.getDrawable().getIntrinsicHeight() * matrixParams.getScaleHeight();
+        float x = matrixParams.getX();
+        float y = matrixParams.getY();
 
-        int circleCenterX = view.getWidth() / 2;
-        int circleCenterY = view.getHeight() / 2;
-        int circleRadius = cookieCutterParams.getCircleRadius();
-
-        float width = view.getDrawable().getIntrinsicWidth() * scaleWidth;
-        float height = view.getDrawable().getIntrinsicHeight() * scaleHeight;
-
-        if (translationX + x > circleCenterX - circleRadius) {
-            translationX = circleCenterX - circleRadius - x;
-        } else if (translationX + x + width < circleCenterX + circleRadius) {
-            translationX = circleCenterX + circleRadius - x - width;
+        if (translationX + x > circle.getLeftBound()) {
+            translationX = circle.getLeftBound() - x;
+        } else if (translationX + x + width < circle.getRightBound()) {
+            translationX = circle.getRightBound() - x - width;
         }
 
-        if (translationY + y > circleCenterY - circleRadius) {
-            translationY = circleCenterY - circleRadius - y;
-        } else if (translationY + y + height < circleCenterY + circleRadius) {
-            translationY = circleCenterY + circleRadius - y - height;
+        if (translationY + y > circle.getTopBound()) {
+            translationY = circle.getTopBound() - y;
+        } else if (translationY + y + height < circle.getBottomBound()) {
+            translationY = circle.getBottomBound() - y - height;
         }
 
         matrix.postTranslate(translationX, translationY);
