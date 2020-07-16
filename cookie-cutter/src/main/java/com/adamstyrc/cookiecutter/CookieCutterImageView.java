@@ -50,7 +50,6 @@ public class CookieCutterImageView extends ImageView {
         setScaleType(ScaleType.MATRIX);
 
         cookieCutterParams = new CookieCutterParams();
-        setDefaultRadius();
 
         if (getDrawable() != null) {
             ViewTreeObserver vto = getViewTreeObserver();
@@ -65,6 +64,7 @@ public class CookieCutterImageView extends ImageView {
     }
 
     private void onImageLoaded() {
+        setDefaultRadius();
         cookieCutterParams.updateWithView(getWidth(), getHeight());
         setImageCentered();
         setOnTouchListener(new CookieCutterTouchListener(cookieCutterParams, getImageMatrix()));
@@ -187,7 +187,7 @@ public class CookieCutterImageView extends ImageView {
     }
 
     private void setDefaultRadius() {
-        Point screenSize = ImageUtils.getScreenSize(getContext());
+        Point screenSize = new Point(this.getWidth(), this.getHeight());
         int minScreenSize = Math.min(screenSize.x, screenSize.y);
         cookieCutterParams.setCircleRadius((int) (minScreenSize * 0.4f));
     }
